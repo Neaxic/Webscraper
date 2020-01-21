@@ -5,15 +5,13 @@ const url = 'https://en.wikipedia.org/wiki/List_of_Presidents_of_the_United_Stat
 const $ = require('cheerio');
 const PotusParse = require('./potusParse');
 
-const content = [];
-
-
 rp(url)
     .then(function (html) {
         //console.log(html);
         console.log($('big > a', html).length);
+        const wikiUrls = [];
         for (let i = 0; i < 45; i++) {
-            content.push($('big > a', html)[i].attribs.href);
+            wikiUrls.push($('big > a', html)[i].attribs.href);
         }
         return Promise.all(
             wikiUrls.map(function (url) {
@@ -25,11 +23,7 @@ rp(url)
     console.log(presidents);
     })
     .catch(function (err) {
-        console.log('Error: ', err)
+        console.log('Error: ', err);
     });
-
-
-const svar = PotusParse()
-
 
 //console.log('hi')

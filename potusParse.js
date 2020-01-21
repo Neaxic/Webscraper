@@ -2,7 +2,6 @@
 
 const rp = require('request-promise');
 const $ = require('cheerio');
-const url = 'https://en.wikipedia.org/wiki/George_Washington';
 
 
 // function PotusParse(url) {
@@ -15,22 +14,18 @@ const url = 'https://en.wikipedia.org/wiki/George_Washington';
 // }
 
 
-function PotusParse(url) {
+function potusParse(url) {
     return rp(url)
         .then(function (html) {
             //console.log(html);
-            const name = ($('#firstHeading', html).text());
-            console.log(element.text());
-
-            const bday = ($('.bday', html).text());
-            console.log(bday);
-
-            svar = name, bday;
-            return svar;
+            return {
+            name: ($('#firstHeading', html).text()),
+            birth: ($('.bday', html).text())
+            };
         })
         .catch(function (err) {
             console.log('Error: ', err)
         })
 }
 
-module.exports(PotusParse);
+module.exports = potusParse;
